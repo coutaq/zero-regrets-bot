@@ -11,10 +11,11 @@ namespace ZeroRegretsBot
 
         static void Main()
         {
-                botClient = new TelegramBotClient(SecretFile.token);
-                var me = botClient.GetMeAsync().Result;
-                botClient.OnMessage += Bot_OnMessage;
-                botClient.StartReceiving();
+            botClient = new TelegramBotClient(SecretFile.token);
+            var me = botClient.GetMeAsync().Result;
+            botClient.OnMessage += Bot_OnMessage;
+            botClient.StartReceiving();
+            Thread.Sleep(int.MaxValue);
         }
 
         static async void Bot_OnMessage(object sender, MessageEventArgs e)
@@ -22,7 +23,7 @@ namespace ZeroRegretsBot
             Console.WriteLine(e.Message.Text);
             try
             {
-                if (e.Message.Text.ToLower().Trim() == "шиз")
+                if (e.Message.Text.ToLower().Trim().Contains("шиз") && !e.Message.Text.ToLower().Trim().Contains("шиза"))
                 {
                     Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
                     await botClient.SendTextMessageAsync(e.Message.Chat, "тех");
