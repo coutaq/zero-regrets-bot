@@ -11,11 +11,10 @@ namespace ZeroRegretsBot
 
         static void Main()
         {
-            botClient = new TelegramBotClient(SecretFile.token);
-            var me = botClient.GetMeAsync().Result;
-            botClient.OnMessage += Bot_OnMessage;
-            botClient.StartReceiving();
-            Thread.Sleep(int.MaxValue);
+                botClient = new TelegramBotClient(SecretFile.token);
+                var me = botClient.GetMeAsync().Result;
+                botClient.OnMessage += Bot_OnMessage;
+                botClient.StartReceiving();
         }
 
         static async void Bot_OnMessage(object sender, MessageEventArgs e)
@@ -23,14 +22,13 @@ namespace ZeroRegretsBot
             Console.WriteLine(e.Message.Text);
             try
             {
-                if (e.Message.Voice.FileSize > 0)
-                {
-                    await botClient.SendTextMessageAsync(e.Message.Chat, "ой та ну тебя", Telegram.Bot.Types.Enums.ParseMode.Default, false, false, e.Message.MessageId);
-                }
                 if (e.Message.Text.ToLower().Trim() == "шиз")
                 {
                     Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
                     await botClient.SendTextMessageAsync(e.Message.Chat, "тех");
+                }else if (e.Message.Voice.FileSize > 0)
+                {
+                    await botClient.SendTextMessageAsync(e.Message.Chat, "ой та ну тебя", Telegram.Bot.Types.Enums.ParseMode.Default, false, false, e.Message.MessageId);
                 }
             }
             catch { 
